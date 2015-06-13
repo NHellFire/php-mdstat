@@ -63,12 +63,12 @@ function format_time ($seconds) {
 }
 
 
-function mksize ($seconds) {
+function format_bytes ($bytes) {
 	$suf = array("B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB");
 
 	for ($i = 1, $x = 0; $i <= count($suf); $i++, $x++) {
-		if ($seconds < pow(1000, $i) || $i == count($suf))
-			return number_format($seconds/pow(1024, $x), 2)." ".$suf[$x];
+		if ($bytes < pow(1000, $i) || $i == count($suf))
+			return number_format($bytes/pow(1024, $x), 2)." ".$suf[$x];
 	}
 }
 
@@ -157,12 +157,12 @@ foreach ($mdstatus["devices"] as $dev => $mddata) {
 	printf("\t%s:\n", $dev);
 
 	printf("\t\tActive Disks: %d/%d\n", $mddata["active"], $mddata["registered"]);
-	printf("\t\tSize: %s\n", mksize($mddata["volume_size"]));
+	printf("\t\tSize: %s\n", format_bytes($mddata["volume_size"]));
 	printf("\t\tStatus: %s\n", $mddata["status"]);
 
 	printf("\t\tAction: %s", $mddata["action"]["name"]);
 	if ($mddata["action"]["percent"] >= 0) {
-		printf(" (%.1f%% - ETA: %s @ %s/s)", $mddata["action"]["percent"], format_time($mddata["action"]["eta"]), mksize($mddata["action"]["speed"]));
+		printf(" (%.1f%% - ETA: %s @ %s/s)", $mddata["action"]["percent"], format_time($mddata["action"]["eta"]), format_bytes($mddata["action"]["speed"]));
 	}
 	printf("\n");
 
