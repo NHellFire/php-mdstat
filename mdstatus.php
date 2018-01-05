@@ -140,6 +140,8 @@ for ($linepos = 1, $linecount = count($lines); $linepos < $linecount; $linepos++
 				if ($speed > 0) {
 					$eta = ($progress[1] - $progress[0]) / $speed;
 				}
+			} elseif ($progress[0] != "none") {
+				$action .= " ($progress[0])";
 			}
 
 			$mdstatus["devices"][$dev]["action"] = array("name" => $action, "percent" => $percent, "eta" => $eta, "speed" => $speed * 1024);
