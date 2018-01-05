@@ -46,6 +46,8 @@ function format_time ($seconds) {
 	if ($time["sec"] != 1) $sec = " secs";
 	else $sec = " sec";
 
+	$ret = "";
+
 	if ($time["week"])
 		$ret .= sprintf("%s%s ", $time["week"], $week);
 	if ($time["day"])
@@ -101,7 +103,7 @@ for ($linepos = 1, $linecount = count($lines); $linepos < $linecount; $linepos++
 
 		for ($i = 2, $details_count = count($details); $i < $details_count; $i++) {
 			if (preg_match('/^([a-z0-9]+)\[([0-9]+)\](?:\(([SF])\))?$/', $details[$i], $disk)) {
-				$mdstatus["devices"][$dev]["disks"][$disk[1]] = array("raid_index" => $disk[2], "status" => $disk[3]);
+				$mdstatus["devices"][$dev]["disks"][$disk[1]] = array("raid_index" => $disk[2], "status" => @$disk[3]);
 			}
 		}
 		uasort($mdstatus["devices"][$dev]["disks"], create_function('$a,$b', 'if ($a["raid_index"] == $b["raid_index"]) { return 0; } return ($a["raid_index"] < $b["raid_index"]) ? -1 : 1;'));
