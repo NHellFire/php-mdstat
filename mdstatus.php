@@ -119,6 +119,10 @@ for ($linepos = 1, $linecount = count($lines); $linepos < $linecount; $linepos++
 		if (preg_match('/\[([0-9]+)\/([0-9]+)\]/', $options, $matches)) {
 			$mdstatus["devices"][$dev]["registered"] = $matches[1];
 			$mdstatus["devices"][$dev]["active"] = $matches[2];
+
+			if ($mdstatus["devices"][$dev]["active"] < $mdstatus["devices"][$dev]["registered"]) {
+				$mdstatus["devices"][$dev]["status"] = "Degraded";
+			}
 		}
 
 		$action = $lines[$linepos + 2];
